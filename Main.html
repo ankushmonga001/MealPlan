@@ -52,14 +52,14 @@ padding:0.5vw;
 }
 
 </style>
-<script src="js/d3.min.js"></script>
+<script src="d3.min.js"></script>
 <!--<link href="http://mottie.github.io/tablesorter/css/theme.default.css" rel="stylesheet">-->
 <!--<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> -->
 <!--<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.9.1/jquery.tablesorter.min.js"></script>-->
 </head>
 <body>
      <div class="header">
-	 <img src='./images/adu.png'/ style="height:100%; float:left;margin-right:10%;">
+	 <img src='adu.png'/ style="height:100%; float:left;margin-right:10%;">
 		 <div style="display:grid;align-items:center;grid-template-columns: repeat(4, 1fr); float:left;height:100%;">
 		 
 			 <input type="button" class="days" value="Yesterday" id="Yesterday" onclick="mealForTheDay(value)"/>
@@ -108,7 +108,7 @@ padding:0.5vw;
 <script>
 
 	var data,today_index,yesterday_index,tomorrow_index;
-	d3.csv(".//data//fiteloplan.csv",function(mealsData){
+	d3.csv("fiteloplan.csv",function(mealsData){
 		data=mealsData;
 		document.getElementById("Today").style.backgroundColor = "#a97c29"
 		totalRecords=15;
