@@ -1,0 +1,177 @@
+
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<style>
+.header{
+height: 7%;
+border-bottom: 2px solid #a97c29;
+margin:0.5%;
+}
+.meals{
+height:auto;
+margin:1.9%;
+//border: 1px dashed #a97c29;
+text-vertical-align: center;
+padding: 2vw;
+font-size:calc(0.95vh+0.95vw);
+background: #2a2316;
+}
+.days{
+background: none;
+font-size: calc(0.95vw+0.95vh) !important;
+color: white !important;
+padding: 0.4vw 0.7vw 0.4vw 0.7vw !important;
+border-radius: 0 !important;
+margin: 10% 5% 10% 5% !important;
+min-width: 100%;
+min-height:50%;
+border: none;
+float:left;
+bottom:0!important;
+border: 1px solid #a97c29;
+cursor:pointer;
+}
+
+.mealheader{
+
+    color: #a97c29;
+    font-size: calc(2.5vh+2.5vw);
+    font-style: italic;
+    padding: 0.1vw;
+	
+	
+	}
+	
+body{
+    background: #030303 !important;
+    color: #e2e2e2 !important;
+}
+li{
+padding:0.5vw;
+}
+
+</style>
+<script src="d3.min.js"></script>
+<!--<link href="http://mottie.github.io/tablesorter/css/theme.default.css" rel="stylesheet">-->
+<!--<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> -->
+<!--<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.9.1/jquery.tablesorter.min.js"></script>-->
+</head>
+<body>
+     <div class="header">
+	 <img src='adu.png'/ style="height:100%; float:left;margin-right:10%;">
+		 <div style="display:grid;align-items:center;grid-template-columns: repeat(4, 1fr); float:left;height:100%;">
+		 
+			 <input type="button" class="days" value="Yesterday" id="Yesterday" onclick="mealForTheDay(value)"/>
+			 <input type="button" class="days" value="Today" id="Today" onclick="mealForTheDay(value)"/>
+			 <input type="button" class="days" value="Tomorrow" id="Tomorrow" onclick="mealForTheDay(value)"/>
+			 <p style="float:right; right: 5%; color: orange;position:fixed;font-size:1.95vw;">Welcome!</p>
+		 </div>
+		
+		 
+		 
+	 </div>
+	 <div class="meals">
+	 <div class="mealheader">Meal 1</div>
+	 <div  id="meal1"></div>
+	 </div>
+	  <div class="meals">
+	  <div class="mealheader">Meal 2</div>
+	 <div  id="meal2"></div>
+	 </div>
+	  <div class="meals">
+	  <div class="mealheader">Meal 3</div>
+	 <div id="meal3"></div>
+	 </div>
+	  <div class="meals">
+	  <div class="mealheader">Meal 4</div>
+	 <div id="meal4"></div>
+	 </div>
+	  <div class="meals">
+	  <div class="mealheader">Meal 5</div>
+	 <div id="meal5"></div>
+	 </div>
+	  <div class="meals">
+	  <div class="mealheader">Meal 6</div>
+	 <div id="meal6"></div>
+	 </div>
+	  <div class="meals">
+	  <div class="mealheader">Meal 7</div>
+	 <div id="meal7"></div>
+	 </div>
+	  <div class="meals">
+	  <div class="mealheader">Meal 8</div>
+	 <div id="meal8"></div>
+	 </div>
+</body>
+
+<script>
+
+	var data,today_index,yesterday_index,tomorrow_index;
+	d3.csv("fiteloplan.csv",function(mealsData){
+		data=mealsData;
+		document.getElementById("Today").style.backgroundColor = "#a97c29"
+		totalRecords=15;
+		const myDate=new Date();
+		const date=new Date(myDate.getFullYear(), myDate.getMonth(), myDate.getDate());
+		today_index=(date%totalRecords+1)
+		yesterday_index=(today_index==1)?8:today_index-1;
+		tomorrow_index=today_index+1
+		records=mealsData.filter(function(d){return d.Index==today_index})
+		
+		document.getElementById("meal1").innerHTML=splitLIS(records[0].Meal1)
+		document.getElementById("meal2").innerHTML=splitLIS(records[0].Meal2)
+		document.getElementById("meal3").innerHTML=splitLIS(records[0].Meal3)
+		document.getElementById("meal4").innerHTML=splitLIS(records[0].Meal4)
+		document.getElementById("meal5").innerHTML=splitLIS(records[0].Meal5)
+		document.getElementById("meal6").innerHTML=splitLIS(records[0].Meal6)
+		document.getElementById("meal7").innerHTML=splitLIS(records[0].Meal7)
+		document.getElementById("meal8").innerHTML=splitLIS(records[0].Meal8)
+		
+		
+		
+		
+		
+	})
+	
+	function splitLIS(stringVal){
+		arr=stringVal.split(";")
+		mainout="";
+		arr.forEach(function(d){
+		mainout=mainout+"<li>"+d+"</li>"
+		})
+		
+		return mainout
+		}
+	
+	function mealForTheDay(value){
+			document.getElementById("Today").style.backgroundColor = ""
+			document.getElementById("Yesterday").style.backgroundColor = ""
+			document.getElementById("Tomorrow").style.backgroundColor = ""
+			document.getElementById(value).style.backgroundColor = "#a97c29"
+			if(value=="Today"){
+			index=today_index
+			}
+			else if(value=="Yesterday"){
+			index=yesterday_index
+			}
+			else{
+			index=tomorrow_index
+			}
+			
+			records=data.filter(function(d){return d.Index==index})
+		
+			document.getElementById("meal1").innerHTML=splitLIS(records[0].Meal1)
+			document.getElementById("meal2").innerHTML=splitLIS(records[0].Meal2)
+			document.getElementById("meal3").innerHTML=splitLIS(records[0].Meal3)
+			document.getElementById("meal4").innerHTML=splitLIS(records[0].Meal4)
+			document.getElementById("meal5").innerHTML=splitLIS(records[0].Meal5)
+			document.getElementById("meal6").innerHTML=splitLIS(records[0].Meal6)
+			document.getElementById("meal7").innerHTML=splitLIS(records[0].Meal7)
+			document.getElementById("meal8").innerHTML=splitLIS(records[0].Meal8)
+			
+		}
+
+</script>
+</html>
+
