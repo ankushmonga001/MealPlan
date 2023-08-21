@@ -136,14 +136,14 @@ padding:0.5vw;
 		document.getElementById("meal7").innerHTML=splitLIS(records[0].Meal7)
 		document.getElementById("meal8").innerHTML=splitLIS(records[0].Meal8)
 		
-		document.getElementById("Today").value =  myDate.getDate()+" "+monthlist[myDate.getMonth()-1]
+		document.getElementById("Today").value =  myDate.getDate()+" "+monthlist[myDate.getMonth()]
 		var date1=new Date(myDate.getFullYear(), myDate.getMonth(), myDate.getDate()-1);
-		document.getElementById("Yesterday").value =  date1.getDate()+" "+monthlist[date1.getMonth()-1]
+		document.getElementById("Yesterday").value =  date1.getDate()+" "+monthlist[date1.getMonth()]
 		var date1=new Date(myDate.getFullYear(), myDate.getMonth(), myDate.getDate()+1);
-		document.getElementById("Tomorrow").value =  date1.getDate()+" "+monthlist[date1.getMonth()-1]
+		document.getElementById("Tomorrow").value =  date1.getDate()+" "+monthlist[date1.getMonth()]
 		for (i=2;i<=7;i++){
 		var date1=new Date(myDate.getFullYear(), myDate.getMonth(), myDate.getDate()+i);
-		document.getElementById(i-1).value =  date1.getDate()+" "+monthlist[date1.getMonth()-1]
+		document.getElementById(i-1).value =  date1.getDate()+" "+monthlist[date1.getMonth()]
 		}
 		
 		
