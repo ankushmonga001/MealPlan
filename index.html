@@ -23,8 +23,7 @@ font-size: 0.75vh !important;
 color: white !important;
 padding: 0.4vw 0.7vw 0.4vw 0.7vw !important;
 border-radius: 0 !important;
-margin: 10% 5% 10% 5% !important;
-min-width: 100%;
+min-width: 8%;
 min-height:50%;
 border: none;
 float:left;
@@ -51,6 +50,7 @@ li{
 padding:0.5vw;
 }
 
+
 </style>
 <script src="d3.min.js"></script>
 <!--<link href="http://mottie.github.io/tablesorter/css/theme.default.css" rel="stylesheet">-->
@@ -60,11 +60,17 @@ padding:0.5vw;
 <body>
      <div class="header">
 	 <img src='adu.png'/ style="height:100%; float:left;margin-right:10%;">
-		 <div style="display:grid;align-items:center;grid-template-columns: repeat(4, 1fr); float:left;height:100%;">
+		 <div style=" float:left;height:100%;width:80%">
 		 
-			 <input type="button" class="days" value="Yesterday" id="Yesterday" onclick="mealForTheDay(value)"/>
-			 <input type="button" class="days" value="Today" id="Today" onclick="mealForTheDay(value)"/>
-			 <input type="button" class="days" value="Tomorrow" id="Tomorrow" onclick="mealForTheDay(value)"/>
+			 <input type="button" class="days" value="Yesterday" id="Yesterday" onclick="mealForTheDay(id)"/>
+			 <input type="button" class="days" value="Today" id="Today" onclick="mealForTheDay(id)"/>
+			 <input type="button" class="days" value="Tomorrow" id="Tomorrow" onclick="mealForTheDay(id)"/>
+			 <input type="button" class="days" value="1" id="1" onclick="mealForTheDay(id)"/>
+			 <input type="button" class="days" value="2" id="2" onclick="mealForTheDay(id)"/>
+			 <input type="button" class="days" value="3" id="3" onclick="mealForTheDay(id)"/>
+			 <input type="button" class="days" value="4" id="4" onclick="mealForTheDay(id)"/>
+			 <input type="button" class="days" value="5" id="5" onclick="mealForTheDay(id)"/>
+			 <input type="button" class="days" value="6" id="6" onclick="mealForTheDay(id)"/>
 			 <p style="float:right; right: 5%; color: orange;position:fixed;font-size:1.95vw;">Welcome!</p>
 		 </div>
 		
@@ -108,6 +114,7 @@ padding:0.5vw;
 <script>
 
 	var data,today_index,yesterday_index,tomorrow_index;
+	var monthlist = ['Jan', 'Feb', 'Mar','Apr',"May","June","July","Aug","Sep","Oct","Nov","Dec"];
 	d3.csv("fiteloplan.csv",function(mealsData){
 		data=mealsData;
 		document.getElementById("Today").style.backgroundColor = "#a97c29"
@@ -128,6 +135,15 @@ padding:0.5vw;
 		document.getElementById("meal7").innerHTML=splitLIS(records[0].Meal7)
 		document.getElementById("meal8").innerHTML=splitLIS(records[0].Meal8)
 		
+		document.getElementById("Today").value =  myDate.getDate()+" "+monthlist[myDate.getMonth()-1]
+		var date1=new Date(myDate.getFullYear(), myDate.getMonth(), myDate.getDate()-1);
+		document.getElementById("Yesterday").value =  date1.getDate()+" "+monthlist[date1.getMonth()-1]
+		var date1=new Date(myDate.getFullYear(), myDate.getMonth(), myDate.getDate()+1);
+		document.getElementById("Tomorrow").value =  date1.getDate()+" "+monthlist[date1.getMonth()-1]
+		for (i=2;i<=7;i++){
+		var date1=new Date(myDate.getFullYear(), myDate.getMonth(), myDate.getDate()+i);
+		document.getElementById(i-1).value =  date1.getDate()+" "+monthlist[date1.getMonth()-1]
+		}
 		
 		
 		
@@ -148,6 +164,9 @@ padding:0.5vw;
 			document.getElementById("Today").style.backgroundColor = ""
 			document.getElementById("Yesterday").style.backgroundColor = ""
 			document.getElementById("Tomorrow").style.backgroundColor = ""
+			for (i=2;i<=7;i++){
+				document.getElementById(i-1).style.backgroundColor = ""
+		}
 			document.getElementById(value).style.backgroundColor = "#a97c29"
 			if(value=="Today"){
 			index=today_index
@@ -155,8 +174,14 @@ padding:0.5vw;
 			else if(value=="Yesterday"){
 			index=yesterday_index
 			}
-			else{
+			else if(value=="Tomorrow"){
 			index=tomorrow_index
+			}
+			else{
+			index=tomorrow_index+parseInt(value)
+			}
+			if(index>totalRecords){
+			index=(index%totalRecords+1)
 			}
 			
 			records=data.filter(function(d){return d.Index==index})
