@@ -137,7 +137,7 @@ font-size:0.75vh;
 	d3.csv("fiteloplan.csv",function(mealsData){
 		data=mealsData;
 		document.getElementById("Today").style.backgroundColor = "#a97c29"
-		totalRecords=73;
+		totalRecords=71;
 		const myDate=new Date();
 		const date=new Date(myDate.getFullYear(), myDate.getMonth(), myDate.getDate());
 		today_index=(parseInt((date.getTime()/(1000*60*60*24))%totalRecords)+1)
